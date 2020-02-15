@@ -1,0 +1,27 @@
+{
+	"name": "poke",
+	"version": "1.0.0",
+	"description": "first-gen pokedex",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc -p .",
+		"watch": "webpack -w"
+	},
+	"author": "cryptofool13",
+	"license": "ISC",
+	"dependencies": {
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0",
+		"react-router-dom": "^5.1.2",
+		"styled-components": "^5.0.1"
+	},
+	"devDependencies": {
+		"@types/react": "^16.9.19",
+		"@types/react-dom": "^16.9.5",
+		"@types/react-router-dom": "^5.1.3",
+		"ts-loader": "^6.2.1",
+		"typescript": "^3.7.5",
+		"webpack": "^4.41.6",
+		"webpack-cli": "^3.3.11"
+	}
+}
