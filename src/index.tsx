@@ -3,13 +3,13 @@ import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 
 import Wrapper from "./components/Wrapper"
-import CoverView from "./components/views/CoverView"
+import { Start } from "./components/views"
 
 ReactDOM.render(
 	<Router>
 		<Wrapper>
 			<Route path="/">
-				<CoverView />
+				<Start />
 			</Route>
 		</Wrapper>
 	</Router>,
