@@ -1,0 +1,8 @@
+type Pokemons {
+  name: String!
+}
+
+type Query {
+	hello: String!
+  pokemonsAll: [Pokemons]!
+}
