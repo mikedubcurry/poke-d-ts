@@ -1,6 +1,6 @@
 # Poke.d.ts Server
 
-Connect to pokeapi.co and expose a GraphQL api for client use.
+Connect to pokeapi.co and expose a GraphQL api and Redis cache for client use.
 
 ## Auth Protected Actions
 
