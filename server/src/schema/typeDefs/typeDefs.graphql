@@ -1,8 +1,11 @@
 type Pokemons {
-  name: String!
+	name: String!
+	id: Int!
+	url: String!
+	sprite: String!
 }
 
 type Query {
 	hello: String!
-  pokemonsAll: [Pokemons]!
+	pokemonsAll: [Pokemons]!
 }
