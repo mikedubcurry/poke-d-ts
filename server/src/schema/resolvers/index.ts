@@ -1,12 +1,12 @@
 import { IResolvers } from "graphql-tools"
-import fetch from "node-fetch"
+import fetch, { Response } from "node-fetch"
 
 const resolvers: IResolvers = {
 	Query: {
 		pokemonsAll: async (parent, args, context, info) => {
 			let pokemons = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=151")
 			let { results } = await pokemons.json()
-			return results.map(async res => {
+			return results.map(async (res: Response) => {
 				let pokeman = await fetch(res.url)
 				let pokemanJson = await pokeman.json()
 				return {
