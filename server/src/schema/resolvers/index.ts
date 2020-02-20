@@ -4,8 +4,9 @@ import redis, { ClientOpts } from "redis"
 import { promisify } from "util"
 
 const cache = redis.createClient(process.env.REDIS_URL as ClientOpts)
-const checkCache = promisify(cache.smembers).bind(cache)
-const getCache = promisify(cache.hgetall).bind(cache)
+const checkAll = promisify(cache.smembers).bind(cache)
+const getPokemon = promisify(cache.hgetall).bind(cache)
+const checkBy = promisify(cache.exists).bind(cache)
 
 interface PokeShort {
 	name: string
@@ -14,13 +15,36 @@ interface PokeShort {
 
 const resolvers: IResolvers = {
 	Query: {
+		pokemon: async (parent, args, context, info) => {
+			try {
+				const { id } = args
+				let isCached = await checkBy(id)
+				if (isCached) {
+					let pokemon = await getPokemon(id)
+					return {
+						id: parseInt(id),
+						...pokemon
+					}
+				} else {
+					let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+					let pokemon = await response.json()
+					return {
+						name: pokemon.name,
+						url: pokemon.species.url,
+						id: pokemon.id,
+						sprite: pokemon.sprites.front_default
+					}
+				}
+			} catch (e) {
+				console.log(e)
+			}
+		},
 		pokemonsAll: async (parent, args, context, info) => {
 			try {
-				let cachedPokemons = await checkCache("pokemons")
+				let cachedPokemons: Array<string> = await checkAll("pokemons")
 				if (cachedPokemons.length) {
 					return cachedPokemons.map(async name => {
-						let poke = await getCache(name)
-						// console.log(poke)
+						let poke = await getPokemon(name)
 						return {
 							...poke,
 							id: parseInt(poke.id),
@@ -28,11 +52,10 @@ const resolvers: IResolvers = {
 						}
 					})
 				} else {
-					console.log("hitting API")
-					let pokemons = await fetch(
+					let response = await fetch(
 						"https://pokeapi.co/api/v2/pokemon/?limit=151"
 					)
-					let { results } = await pokemons.json()
+					let { results } = await response.json()
 					// cache.set("pokemons", results)
 					results.forEach((poke: PokeShort) => {
 						cache.sadd("pokemons", poke.name)
@@ -49,6 +72,15 @@ const resolvers: IResolvers = {
 							"sprite",
 							sprites.front_default
 						)
+						cache.hmset(
+							id,
+							"name",
+							name,
+							"url",
+							species.url,
+							"sprite",
+							sprites.front_default
+						)
 						return {
 							name: name,
 							id: id,
@@ -60,52 +92,6 @@ const resolvers: IResolvers = {
 			} catch (e) {
 				console.log(e)
 			}
-			// return  cache.smembers("pokemons", async (err, res) => {
-			// 	 console.log(res)
-			// 	let cachedPokemons = res
-			// 	if (cachedPokemons.length) {
-			// 		console.log("cache served")
-			// 		return cachedPokemons.map(poke => {
-			// 			return cache.hgetall(poke, (e, { name, id, url, sprite }) => {
-			// 				return {
-			// 					name: name,
-			// 					url: url,
-			// 					sprite: sprite,
-			// 					id: parseInt(id)
-			// 				}
-			// 			})
-			// 		})
-			// 	}
-
-			// 	console.log("hitting API")
-			// 	let pokemons = await fetch(
-			// 		"https://pokeapi.co/api/v2/pokemon/?limit=151"
-			// 	)
-			// 	let { results } = await pokemons.json()
-			// 	// cache.set("pokemons", results)
-			// 	results.forEach((poke: PokeShort) => {
-			// 		cache.sadd("pokemons", poke.name)
-			// 	})
-			// 	return results.map(async (res: Response) => {
-			// 		let pokeman = await fetch(res.url)
-			// 		let { name, id, species, sprites } = await pokeman.json()
-			// 		cache.hmset(
-			// 			name,
-			// 			"id",
-			// 			id,
-			// 			"url",
-			// 			species.url,
-			// 			"sprite",
-			// 			sprites.front_default
-			// 		)
-			// 		return {
-			// 			name: name,
-			// 			id: id,
-			// 			url: species.url,
-			// 			sprite: sprites.front_default
-			// 		}
-			// 	})
-			// })
 		},
 		hello: () => "Hello GraphQL"
 	}

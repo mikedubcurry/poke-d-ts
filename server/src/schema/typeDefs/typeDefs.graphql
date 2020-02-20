@@ -1,4 +1,4 @@
-type Pokemons {
+type Pokemon {
 	name: String!
 	id: Int!
 	url: String!
@@ -7,5 +7,6 @@ type Pokemons {
 
 type Query {
 	hello: String!
-	pokemonsAll: [Pokemons]!
+	pokemonsAll: [Pokemon]!
+	pokemon(id: Int): Pokemon
 }
