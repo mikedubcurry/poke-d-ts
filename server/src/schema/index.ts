@@ -3,7 +3,7 @@ import { makeExecutableSchema } from "graphql-tools"
 import { GraphQLSchema } from "graphql"
 
 import resolvers from "./resolvers"
-import * as typeDefs from "./typeDefs/typeDefs.graphql"
+import typeDefs from "./typeDefs/typeDefs"
 
 const schema: GraphQLSchema = makeExecutableSchema({
 	typeDefs,
