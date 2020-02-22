@@ -39,7 +39,7 @@ const resolvers: IResolvers = {
 				console.log(e)
 			}
 		},
-		pokemonsAll: async (parent, args, context, info) => {
+		pokemonsAll: async () => {
 			try {
 				let cachedPokemons: Array<string> = await checkAll("pokemons")
 				if (cachedPokemons.length) {
