@@ -1,6 +1,7 @@
 import { ApolloServer } from "apollo-server-express"
 import { createTestClient } from "apollo-server-testing"
 
+import cache, { checkAll, checkBy, getPokemon } from "../../../cache"
 import schema from "../../../schema"
 
 const HELLO_QUERY = `
