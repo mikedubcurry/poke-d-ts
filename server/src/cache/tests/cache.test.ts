@@ -15,11 +15,9 @@ const MAGIKARP_QUERY = `
   }
 `
 
+
 describe("Redis cache", () => {
-  beforeAll(() => {
-    cache.del('pokemons')
-    cache.del('129')
-  })
+
 	it("should populate redis if no entries found for pokemon", async () => {
 		const server = new ApolloServer({ schema })
 		const { query } = createTestClient(server)
@@ -27,6 +25,6 @@ describe("Redis cache", () => {
     const res = await query({ query: MAGIKARP_QUERY })
     
     const isInCache = await getPokemon('129')
-    expect(isInCache).not.toBe(null)
+    expect(isInCache).toBeTruthy()
   })
 })

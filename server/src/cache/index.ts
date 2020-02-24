@@ -8,7 +8,3 @@ const checkBy = promisify(cache.exists).bind(cache)
 
 export default cache
 export { checkAll, getPokemon, checkBy }
-
-// export default (cache) => {
-// 	return cache.createClient(process.env.REDIS_URL as ClientOpts)
-// }
