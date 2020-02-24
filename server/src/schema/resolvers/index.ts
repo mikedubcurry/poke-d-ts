@@ -13,6 +13,7 @@ const resolvers: IResolvers = {
 		pokemon: async (parent, args, context, info) => {
 			try {
 				const { id } = args
+				// @ts-ignore
 				let isCached = await checkBy(id)
 				if (isCached) {
 					let pokemon = await getPokemon(id)
