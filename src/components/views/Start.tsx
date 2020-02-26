@@ -1,11 +1,7 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 
 const Start: FC = () => {
-	return (
-		<>
-			
-		</>
-	)
+	return <></>
 }
 
 export default Start
