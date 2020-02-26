@@ -13,7 +13,8 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				loader: "ts-loader"
+				loader: "ts-loader",
+				exclude: [/server/]
 			}
 		]
 	},
