@@ -1,16 +1,16 @@
 import React, { FC } from "react"
-import { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 import { Header } from "./elements"
 
-const App = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
 	*,
 	*::before,
 	*::after {
 		box-sizing: border-box;
 	}
 
-	ul[class],
-	ol[class] {
+	ul,
+	ol {
 		padding: 0;
 	}
 
@@ -20,8 +20,8 @@ const App = createGlobalStyle`
 	h3,
 	h4,
 	p,
-	ul[class],
-	ol[class],
+	ul,
+	ol,
 	li {
 		margin: 0;
 	}
@@ -33,8 +33,8 @@ const App = createGlobalStyle`
 		line-height: 1.5;
 	}
 
-	ul[class],
-	ol[class] {
+	ul,
+	ol {
 		list-style: none;
 	}
 
@@ -63,13 +63,21 @@ const App = createGlobalStyle`
 	}
 `
 
+const NavWrapper = styled.main`
+	display: flex;
+	flex-direction: column;
+justify-content: space-around;
+align-items: center;
+height: 100vh;
+`
+
 const Wrapper: FC = ({ children }) => {
 	return (
-		<>
-			<App />
+		<NavWrapper>
+			<GlobalStyles />
 			<Header />
 			{children}
-		</>
+		</NavWrapper>
 	)
 }
 
