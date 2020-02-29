@@ -66,9 +66,9 @@ const GlobalStyles = createGlobalStyle`
 const NavWrapper = styled.main`
 	display: flex;
 	flex-direction: column;
-justify-content: space-around;
-align-items: center;
-height: 100vh;
+	justify-content: space-around;
+	align-items: center;
+	// height: 100vh;
 `
 
 const Wrapper: FC = ({ children }) => {

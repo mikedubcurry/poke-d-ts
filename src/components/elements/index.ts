@@ -1,3 +1,4 @@
 import Header from "./Header"
+import PokeCard from "./PokeCard"
 
-export { Header }
+export { Header, PokeCard }

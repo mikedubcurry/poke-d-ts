@@ -1,20 +1,25 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 import Wrapper from "./components/Wrapper"
-import { Start, Pokedex } from "./components/views"
-
+import { Start, Pokedex, PokemonData } from "./components/views"
 
 ReactDOM.render(
 	<Router>
 		<Wrapper>
-			<Route path="/">
-				<Start />
-			</Route>
-			<Route path='/pokedex'>
-				<Pokedex/>
-			</Route>
+			<Switch>
+				<Route exact path="/">
+					<Start />
+				</Route>
+
+				<Route path="/pokedex/:id">
+					<PokemonData />
+				</Route>
+				<Route exact path="/pokedex">
+					<Pokedex />
+				</Route>
+			</Switch>
 		</Wrapper>
 	</Router>,
 	document.querySelector("#root")
