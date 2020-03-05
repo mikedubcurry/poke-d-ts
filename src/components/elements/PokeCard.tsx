@@ -13,8 +13,21 @@ const CardStyle = styled(Link)`
 	align-items: center;
 	background: #ccc;
 
+	img {
+		width: 70%;
+	}
 	div {
 		text-align: center;
+	}
+
+	@media (min-width: 450px) and (max-width: 600px) {
+		width: 20vw;
+		height: 20vw;
+	}
+
+	@media (min-width: 600px) {
+		width: 10vw;
+		height: 10vw;
 	}
 `
 

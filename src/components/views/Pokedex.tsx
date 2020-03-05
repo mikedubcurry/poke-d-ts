@@ -4,15 +4,22 @@ import styled from "styled-components"
 // import {} from 'react-router-dom'
 
 import { PokeCard } from "../elements"
-import {PokemonData} from '../views'
+import { PokemonData } from "../views"
 import { Pokemon } from "../../types"
 import { client } from "../../apollo"
-import { Route, Switch } from "react-router-dom"
 
 const GridView = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 1rem;
+
+	@media (min-width: 450px) and (max-width: 600px) {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	@media (min-width: 600px) {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	}
 `
 
 const Pokedex: FC = () => {
@@ -40,13 +47,11 @@ const Pokedex: FC = () => {
 			})
 	}, [])
 	return (
-				<GridView>
-					{pokemon.map((mon, i) => (
-						<PokeCard pokemon={mon} key={i} />
-					))}
-				</GridView>
-
-
+		<GridView>
+			{pokemon.map((mon, i) => (
+				<PokeCard pokemon={mon} key={i} />
+			))}
+		</GridView>
 	)
 }
 
